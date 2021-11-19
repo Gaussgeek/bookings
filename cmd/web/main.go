@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/Gaussgeek/bookings/pkg/config"
-	"github.com/Gaussgeek/bookings/pkg/handlers"
-	"github.com/Gaussgeek/bookings/pkg/render"
+	"github.com/Gaussgeek/bookings/internal/config"
+	"github.com/Gaussgeek/bookings/internal/handlers"
+	"github.com/Gaussgeek/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
