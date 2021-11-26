@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql/driver"
 	"encoding/gob"
 	"fmt"
 	"log"
@@ -65,6 +66,10 @@ func run() error {
 	session.Cookie.Secure = app.InProduction
 
 	app.Session = session
+
+	// connect to a database
+	log.Println("Connecting to database......")
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=bookings user=andrewl password=")
 
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
