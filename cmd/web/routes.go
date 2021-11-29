@@ -1,11 +1,12 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/Gaussgeek/bookings/internal/config"
 	"github.com/Gaussgeek/bookings/internal/handlers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"net/http"
 )
 
 func routes(app *config.AppConfig) http.Handler {
@@ -23,6 +24,8 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/search-availability/", handlers.Repo.Availability)
 	mux.Post("/search-availability/", handlers.Repo.PostAvailability)
 	mux.Post("/search-availability-json/", handlers.Repo.AvailabilityJSON)
+	mux.Get("/choose-room/{id}/", handlers.Repo.ChooseRoom)
+	mux.Get("/book-room", handlers.Repo.BookRoom)
 
 	mux.Get("/contact/", handlers.Repo.Contact)
 

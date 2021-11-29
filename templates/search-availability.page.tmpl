@@ -53,8 +53,9 @@
 {{define "js"}}
 <script>
     const elem = document.getElementById('reservation-dates');
-    const rangePicker = new DateRangePicker(elem, {
+    const rangePicker = new DateRangePicker(elem, { //this is a vanillajs datepicker
         format: "yyyy-mm-dd",
+        minDate: new Date(), //this prevents users from booking days in the past
     });
 </script>
 
