@@ -30,7 +30,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.SQL.Close()
+	defer db.SQL.Close() //this closes the database
+
+	defer close(app.MailChan) //this closes the channel
 
 	fmt.Println(fmt.Sprintf("Staring application on port %s ", portNumber))
 
@@ -52,6 +54,10 @@ func run() (*driver.DB, error) {
 	gob.Register(models.User{})
 	gob.Register(models.Room{})
 	gob.Register(models.Restriction{})
+
+	//create a channel of type models.MailData
+	mailChan := make(chan models.MailData)
+	app.MailChan = mailChan
 
 	// change this to true when in production
 	app.InProduction = false

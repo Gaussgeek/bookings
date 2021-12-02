@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"html/template"
+	"time"
+)
 
 //Users is the user table model
 type User struct { // important that the first letter is uppercase
@@ -58,4 +61,12 @@ type RoomRestriction struct {
 	Reservation   Reservation
 	Restriction   Restriction
 	Room          Room
+}
+
+// MailData holds an email message
+type MailData struct {
+	To      string
+	From    string
+	Subject string
+	Content template.HTML
 }
