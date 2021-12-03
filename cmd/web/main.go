@@ -32,7 +32,10 @@ func main() {
 	}
 	defer db.SQL.Close() //this closes the database
 
-	defer close(app.MailChan) //this closes the channel
+	defer close(app.MailChan) //this closes the email channel
+
+	fmt.Println("Starting mail listener....")
+	listenForMail()
 
 	fmt.Println(fmt.Sprintf("Staring application on port %s ", portNumber))
 
