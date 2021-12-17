@@ -11,16 +11,16 @@ import (
 
 // DB holds the database connection pool
 type DB struct {
-	SQL *sql.DB //you can change SQL to another database of your choice from here
+	SQL *sql.DB
 }
 
 var dbConn = &DB{}
 
-const maxOpenDbConn = 10 //never exceed 10
+const maxOpenDbConn = 10
 const maxIdleDbConn = 5
 const maxDbLifetime = 5 * time.Minute
 
-//ConnectSQL creates a database pool for Postgres
+// ConnectSQL creates database pool for Postgres
 func ConnectSQL(dsn string) (*DB, error) {
 	d, err := NewDatabase(dsn)
 	if err != nil {
@@ -37,12 +37,10 @@ func ConnectSQL(dsn string) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return dbConn, nil
-
 }
 
-//testDB tries to ping the database
+// testDB tries to ping the database
 func testDB(d *sql.DB) error {
 	err := d.Ping()
 	if err != nil {
@@ -51,14 +49,14 @@ func testDB(d *sql.DB) error {
 	return nil
 }
 
-//NewDatabase creates a new database for the application
+// NewDatabase creates a new database for the application
 func NewDatabase(dsn string) (*sql.DB, error) {
-	db, err := sql.Open("pgx", dsn) //connects to a databse and checks for errors
+	db, err := sql.Open("pgx", dsn)
 	if err != nil {
 		return nil, err
 	}
 
-	if err = db.Ping(); err != nil { //pings a database and checks for errors
+	if err = db.Ping(); err != nil {
 		return nil, err
 	}
 

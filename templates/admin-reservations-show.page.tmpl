@@ -18,7 +18,7 @@
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <input type="hidden" name="year" value="{{index .StringMap "year"}}">
             <input type="hidden" name="month" value="{{index .StringMap "month"}}">
-       
+
             <div class="form-group mt-3">
                 <label for="first_name">First Name:</label>
                 {{with .Form.Errors.Get "first_name"}}
@@ -29,7 +29,6 @@
                        name='first_name' value="{{$res.FirstName}}" required>
             </div>
 
-
             <div class="form-group">
                 <label for="last_name">Last Name:</label>
                 {{with .Form.Errors.Get "last_name"}}
@@ -39,6 +38,7 @@
                        id="last_name" autocomplete="off" type='text'
                        name='last_name' value="{{$res.LastName}}" required>
             </div>
+
             <div class="form-group">
                 <label for="email">Email:</label>
                 {{with .Form.Errors.Get "email"}}
@@ -59,26 +59,26 @@
                        name='phone' value="{{$res.Phone}}" required>
             </div>
 
-        
-        <hr>
-        <div class="float-left">
-            <input type="submit" class="btn btn-primary" value="Save">
-            {{if eq $src "cal"}}
-                <a href="#!" onclick="window.history.go(-1)" class="btn btn-warning">Cancel</a>
-            {{else}}
-                <a href="/admin/reservations-{{$src}}" class="btn btn-warning">Cancel</a>
-            {{end}}
-            {{if eq $res.Processed 0}}
-                <a href="#!" class="btn btn-info" onclick="processRes({{$res.ID}})">Mark as Processed</a>
-            {{end}}
-        </div>
-        <div class="float-right">
-            <a href="#!" class="btn btn-danger" onclick="deleteRes({{$res.ID}})">Delete</a>
-        </div>
-        <div class="clearfix"></div>
-    </form>
+            <hr>
+            <div class="float-left">
+                <input type="submit" class="btn btn-primary" value="Save">
+                {{if eq $src "cal"}}
+                    <a href="#!" onclick="window.history.go(-1)" class="btn btn-warning">Cancel</a>
+                {{else}}
+                    <a href="/admin/reservations-{{$src}}" class="btn btn-warning">Cancel</a>
+                {{end}}
+                {{if eq $res.Processed 0}}
+                    <a href="#!" class="btn btn-info" onclick="processRes({{$res.ID}})">Mark as Processed</a>
+                {{end}}
+            </div>
 
-</div>
+            <div class="float-right">
+                <a href="#!" class="btn btn-danger" onclick="deleteRes({{$res.ID}})">Delete</a>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+
+    </div>
 {{end}}
 
 {{define "js"}}
@@ -97,6 +97,7 @@
                 }
             })
         }
+
         function deleteRes(id) {
             attention.custom({
                 icon: 'warning',

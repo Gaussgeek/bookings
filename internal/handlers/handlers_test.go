@@ -22,7 +22,6 @@ type postData struct {
 	value string
 }
 
-// tests for the routes with method GET
 var theTests = []struct {
 	name               string
 	url                string
@@ -31,19 +30,19 @@ var theTests = []struct {
 }{
 	{"home", "/", "GET", http.StatusOK},
 	{"about", "/about", "GET", http.StatusOK},
-	{"gq", "/presidential-suites/", "GET", http.StatusOK},
-	{"ms", "/platinum-rooms/", "GET", http.StatusOK},
+	{"gq", "/generals-quarters", "GET", http.StatusOK},
+	{"ms", "/majors-suite", "GET", http.StatusOK},
 	{"sa", "/search-availability", "GET", http.StatusOK},
 	{"contact", "/contact", "GET", http.StatusOK},
 	{"non-existent", "/green/eggs/and/ham", "GET", http.StatusNotFound},
 	{"login", "/user/login", "GET", http.StatusOK},
 	{"logout", "/user/logout", "GET", http.StatusOK},
 	{"dashboard", "/admin/dashboard", "GET", http.StatusOK},
-	{"new reservations", "/admin/reservations-new", "GET", http.StatusOK},
-	{"all reservations", "/admin/reservations-all", "GET", http.StatusOK},
-	{"show reservations", "/admin/reservations/new/1/show", "GET", http.StatusOK},
-	{"show reservations cal", "/admin/reservations-calendar", "GET", http.StatusOK},
-	{"show reservation cal with params", "/admin/reservations-calendar?y=2020&m=1", "GET", http.StatusOK},
+	{"new res", "/admin/reservations-new", "GET", http.StatusOK},
+	{"all res", "/admin/reservations-all", "GET", http.StatusOK},
+	{"show res", "/admin/reservations/new/1/show", "GET", http.StatusOK},
+	{"show res cal", "/admin/reservations-calendar", "GET", http.StatusOK},
+	{"show res cal with params", "/admin/reservations-calendar?y=2020&m=1", "GET", http.StatusOK},
 }
 
 // TestHandlers tests all routes that don't require extra tests (gets)
@@ -79,7 +78,7 @@ var reservationTests = []struct {
 			RoomID: 1,
 			Room: models.Room{
 				ID:       1,
-				RoomName: "Presidential suite",
+				RoomName: "General's Quarters",
 			},
 		},
 		expectedStatusCode: http.StatusOK,
@@ -98,7 +97,7 @@ var reservationTests = []struct {
 			RoomID: 100,
 			Room: models.Room{
 				ID:       100,
-				RoomName: "Presidential suite",
+				RoomName: "General's Quarters",
 			},
 		},
 		expectedStatusCode: http.StatusSeeOther,
@@ -114,7 +113,7 @@ func TestReservation(t *testing.T) {
 		ctx := getCtx(req)
 		req = req.WithContext(ctx)
 
-		rr := httptest.NewRecorder() // rr is a response recorder
+		rr := httptest.NewRecorder()
 		if e.reservation.RoomID > 0 {
 			session.Put(ctx, "reservation", e.reservation)
 		}
@@ -484,7 +483,7 @@ var reservationSummaryTests = []struct {
 			RoomID: 1,
 			Room: models.Room{
 				ID:       1,
-				RoomName: "Presidential suite ",
+				RoomName: "General's Quarters",
 			},
 		},
 		url:                "/reservation-summary",
@@ -543,7 +542,7 @@ var chooseRoomTests = []struct {
 			RoomID: 1,
 			Room: models.Room{
 				ID:       1,
-				RoomName: "Presidential suite",
+				RoomName: "General's Quarters",
 			},
 		},
 		url:                "/choose-room/1",
@@ -620,7 +619,7 @@ func TestBookRoom(t *testing.T) {
 		RoomID: 1,
 		Room: models.Room{
 			ID:       1,
-			RoomName: "Presidential suite",
+			RoomName: "General's Quarters",
 		},
 	}
 

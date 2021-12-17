@@ -1,13 +1,15 @@
 package render
 
 import (
-	"github.com/Gaussgeek/bookings/internal/models"
 	"net/http"
 	"testing"
+
+	"github.com/Gaussgeek/bookings/internal/models"
 )
 
 func TestAddDefaultData(t *testing.T) {
 	var td models.TemplateData
+
 	r, err := getSession()
 	if err != nil {
 		t.Error(err)
@@ -43,14 +45,14 @@ func TestRenderTemplate(t *testing.T) {
 		t.Error("error writing template to browser")
 	}
 
-	err = Template(&ww, r, "non-existing.page.tmpl", &models.TemplateData{})
+	err = Template(&ww, r, "non-existent.page.tmpl", &models.TemplateData{})
 	if err == nil {
 		t.Error("rendered template that does not exist")
 	}
 }
 
 func getSession() (*http.Request, error) {
-	r, err := http.NewRequest("GET", "/some-url/", nil)
+	r, err := http.NewRequest("GET", "/some-url", nil)
 	if err != nil {
 		return nil, err
 	}

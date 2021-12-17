@@ -4,8 +4,8 @@ import (
 	"time"
 )
 
-//Users is the user table model
-type User struct { // important that the first letter is uppercase
+// User is the user model
+type User struct {
 	ID          int
 	FirstName   string
 	LastName    string
@@ -16,7 +16,7 @@ type User struct { // important that the first letter is uppercase
 	UpdatedAt   time.Time
 }
 
-//Room is the room table model
+// Room is the room model
 type Room struct {
 	ID        int
 	RoomName  string
@@ -24,7 +24,7 @@ type Room struct {
 	UpdatedAt time.Time
 }
 
-//Restriction is the restrictions table model
+// Restriction is the restriction model
 type Restriction struct {
 	ID              int
 	RestrictionName string
@@ -32,7 +32,7 @@ type Restriction struct {
 	UpdatedAt       time.Time
 }
 
-//Reservation is the reservations table model
+// Reservation is the reservation model
 type Reservation struct {
 	ID        int
 	FirstName string
@@ -48,7 +48,7 @@ type Reservation struct {
 	Processed int
 }
 
-//RoomRestriction is the model for the room restrictions table
+// RoomRestriction is the room restriction model
 type RoomRestriction struct {
 	ID            int
 	StartDate     time.Time
@@ -58,9 +58,9 @@ type RoomRestriction struct {
 	RestrictionID int
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
+	Room          Room
 	Reservation   Reservation
 	Restriction   Restriction
-	Room          Room
 }
 
 // MailData holds an email message

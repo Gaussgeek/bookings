@@ -2,7 +2,6 @@ package dbrepo
 
 import (
 	"database/sql"
-
 	"github.com/Gaussgeek/bookings/internal/config"
 	"github.com/Gaussgeek/bookings/internal/repository"
 )
@@ -14,20 +13,18 @@ type postgresDBRepo struct {
 
 type testDBRepo struct {
 	App *config.AppConfig
-	DB *sql.DB
+	DB  *sql.DB
 }
 
 func NewPostgresRepo(conn *sql.DB, a *config.AppConfig) repository.DatabaseRepo {
 	return &postgresDBRepo{
 		App: a,
 		DB:  conn,
-		}
+	}
 }
 
-
-func NewTestingRepo(a *config.AppConfig) repository.DatabaseRepo {
+func NewTestingsRepo(a *config.AppConfig) repository.DatabaseRepo {
 	return &testDBRepo{
 		App: a,
-		
-		}
+	}
 }

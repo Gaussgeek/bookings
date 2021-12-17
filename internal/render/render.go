@@ -16,14 +16,13 @@ import (
 )
 
 var functions = template.FuncMap{
-	"humanDate":  HumanDate, //must add it here to be accessible to all templates
+	"humanDate":  HumanDate,
 	"formatDate": FormatDate,
 	"iterate":    Iterate,
 	"add":        Add,
 }
 
 var app *config.AppConfig
-
 var pathToTemplates = "./templates"
 
 func Add(a, b int) int {
@@ -54,20 +53,19 @@ func FormatDate(t time.Time, f string) string {
 	return t.Format(f)
 }
 
+// AddDefaultData adds data for all templates
 func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
 	td.Flash = app.Session.PopString(r.Context(), "flash")
 	td.Error = app.Session.PopString(r.Context(), "error")
 	td.Warning = app.Session.PopString(r.Context(), "warning")
 	td.CSRFToken = nosurf.Token(r)
-
 	if app.Session.Exists(r.Context(), "user_id") {
 		td.IsAuthenticated = 1
 	}
-
 	return td
 }
 
-// Template renders a template
+// Template renders templates using html/template
 func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	var tc map[string]*template.Template
 
@@ -75,12 +73,13 @@ func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.Te
 		// get the template cache from the app config
 		tc = app.TemplateCache
 	} else {
+		// this is just used for testing, so that we rebuild
+		// the cache on every request
 		tc, _ = CreateTemplateCache()
 	}
 
 	t, ok := tc[tmpl]
 	if !ok {
-		//log.Println("Could not get template from template cache")
 		return errors.New("can't get template from cache")
 	}
 
@@ -92,12 +91,12 @@ func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.Te
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	_, err = buf.WriteTo(w)
 	if err != nil {
-		fmt.Println("error writing template to browser", err)
+		fmt.Println("Error writing template to browser", err)
 		return err
 	}
+
 	return nil
 }
 

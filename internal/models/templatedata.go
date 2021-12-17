@@ -13,5 +13,5 @@ type TemplateData struct {
 	Warning         string
 	Error           string
 	Form            *forms.Form
-	IsAuthenticated int //user is logged in if its not zero
+	IsAuthenticated int
 }

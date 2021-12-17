@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/Gaussgeek/bookings/internal/models"
+	mail "github.com/xhit/go-simple-mail/v2"
 	"io/ioutil"
 	"log"
 	"strings"
 	"time"
-
-	"github.com/Gaussgeek/bookings/internal/models"
-	mail "github.com/xhit/go-simple-mail/v2"
 )
 
 func listenForMail() {
@@ -35,9 +34,8 @@ func sendMsg(m models.MailData) {
 
 	email := mail.NewMSG()
 	email.SetFrom(m.From).AddTo(m.To).SetSubject(m.Subject)
-
 	if m.Template == "" {
-		email.SetBody(mail.TextHTML, m.Content) //mail.TextHTML is the type for the body
+		email.SetBody(mail.TextHTML, m.Content)
 	} else {
 		data, err := ioutil.ReadFile(fmt.Sprintf("./email-templates/%s", m.Template))
 		if err != nil {
@@ -48,8 +46,6 @@ func sendMsg(m models.MailData) {
 		msgToSend := strings.Replace(mailTemplate, "[%body%]", m.Content, 1)
 		email.SetBody(mail.TextHTML, msgToSend)
 	}
-
-	//send a mail
 	err = email.Send(client)
 	if err != nil {
 		log.Println(err)

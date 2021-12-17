@@ -3,6 +3,13 @@ package handlers
 import (
 	"encoding/gob"
 	"fmt"
+	"github.com/alexedwards/scs/v2"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/justinas/nosurf"
+	"github.com/Gaussgeek/bookings/internal/config"
+	"github.com/Gaussgeek/bookings/internal/models"
+	"github.com/Gaussgeek/bookings/internal/render"
 	"html/template"
 	"log"
 	"net/http"
@@ -10,14 +17,6 @@ import (
 	"path/filepath"
 	"testing"
 	"time"
-
-	"github.com/Gaussgeek/bookings/internal/config"
-	"github.com/Gaussgeek/bookings/internal/models"
-	"github.com/Gaussgeek/bookings/internal/render"
-	"github.com/alexedwards/scs/v2"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/justinas/nosurf"
 )
 
 var app config.AppConfig
@@ -93,8 +92,8 @@ func getRoutes() http.Handler {
 
 	mux.Get("/", Repo.Home)
 	mux.Get("/about", Repo.About)
-	mux.Get("/presidential-suites/", Repo.Presidential)
-	mux.Get("/platinum-rooms/", Repo.Platinum)
+	mux.Get("/generals-quarters", Repo.Generals)
+	mux.Get("/majors-suite", Repo.Majors)
 
 	mux.Get("/search-availability", Repo.Availability)
 	mux.Post("/search-availability", Repo.PostAvailability)
