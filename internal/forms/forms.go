@@ -2,23 +2,24 @@ package forms
 
 import (
 	"fmt"
-	"github.com/asaskevich/govalidator"
 	"net/url"
 	"strings"
+
+	"github.com/asaskevich/govalidator"
 )
 
-//Form creates a custom form struct, embeds a url.Values object
+// Form creates a custom form struct, embeds a url.Values object
 type Form struct {
 	url.Values
 	Errors errors
 }
 
-//Valid returns true if there are no errors, otherwise false
+// Valid returns true if there are no errors, otherwise false
 func (f *Form) Valid() bool {
 	return len(f.Errors) == 0
 }
 
-//New initialises a form struct
+// New initializes a form struct
 func New(data url.Values) *Form {
 	return &Form{
 		data,
@@ -26,7 +27,7 @@ func New(data url.Values) *Form {
 	}
 }
 
-//Required checks for required fields
+// Required checks for required fields
 func (f *Form) Required(fields ...string) {
 	for _, field := range fields {
 		value := f.Get(field)
@@ -36,7 +37,7 @@ func (f *Form) Required(fields ...string) {
 	}
 }
 
-//Has checks if form field is in post and not empty
+// Has checks if form field is in post and not empty
 func (f *Form) Has(field string) bool {
 	x := f.Get(field)
 	if x == "" {
@@ -45,7 +46,7 @@ func (f *Form) Has(field string) bool {
 	return true
 }
 
-//MinLength checks for string minimum length
+// MinLength checks for string minimum length
 func (f *Form) MinLength(field string, length int) bool {
 	x := f.Get(field)
 	if len(x) < length {
@@ -55,6 +56,7 @@ func (f *Form) MinLength(field string, length int) bool {
 	return true
 }
 
+// IsEmail checks for valid email address
 func (f *Form) IsEmail(field string) {
 	if !govalidator.IsEmail(f.Get(field)) {
 		f.Errors.Add(field, "Invalid email address")

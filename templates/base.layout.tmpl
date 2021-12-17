@@ -67,7 +67,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a aria-disabled="true" class="nav-link" href="/search-availability/" tabindex="-1">Book Now</a>
+                        <a aria-disabled="true" class="nav-link" href="/search-availability/" tabindex="-1">Search Availability</a>
 
 
                     <li class="nav-item">
@@ -76,8 +76,19 @@
 
                     <li class="nav-item">
                         {{if eq .IsAuthenticated 1}}
-                        <a aria-disabled="true" class="nav-link" href="/user/logout" tabindex="-1">Logout</a>
 
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                               id="navbarDropdown" role="button">
+                                Admin
+                            </a>
+                            <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/admin/dashboard">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+    
+                            </ul>
+                        </li>
+                        
                         {{else}}
                         <a aria-disabled="true" class="nav-link" href="/user/login" tabindex="-1">Login</a>
                         {{end}}
@@ -119,6 +130,7 @@
     <script src="https://unpkg.com/notie"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/static/js/app.js"></script>
   
 
     {{block "js" .}}

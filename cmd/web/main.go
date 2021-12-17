@@ -57,13 +57,14 @@ func run() (*driver.DB, error) {
 	gob.Register(models.User{})
 	gob.Register(models.Room{})
 	gob.Register(models.Restriction{})
+	gob.Register(map[string]int{})
 
 	//create a channel of type models.MailData
 	mailChan := make(chan models.MailData)
 	app.MailChan = mailChan
 
-	// change this to true when in production
-	app.InProduction = false
+	
+	app.InProduction = false // change this to true when in production
 
 	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	app.InfoLog = infoLog
